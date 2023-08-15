@@ -1,0 +1,38 @@
+<div class="col"><form [formGroup]="FormData" (ngSubmit)="onSubmit()">
+    <div class="bg-success text-center"><h4 class="p-2 text-white">Add User</h4></div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Firstname</label>
+      <input type="text" class="form-control" name="firstname" formControlName="firstname" aria-describedby="emailHelp">
+      <span *ngIf="FormData.controls['firstname'].errors?.['required']">kk</span>
+      <span *ngIf="FormData.controls['firstname'].errors?.['minlength']">Min Length Required</span>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Lastname</label>
+      <input type="text" class="form-control" name="lastname" formControlName="lastname" >
+    </div>
+    
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Designation</label>
+        <select class="form-select" formControlName="designation" aria-label="Default select example">
+            <option disabled>Select role</option>
+            <option value="Intern">Intern</option>
+            <option value="Software engineer I">Software engineer I</option>
+            <option value="Software engineer II">Software engineer II</option>
+            <option value="Senior engineer">Senior engineer</option>
+            <option value="Frontend Developer">Frontend Developer</option>
+            <option value="Backend Developer">Backend Developer</option>
+          </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputEmail1"  class="form-label">Email</label>
+        <input type="email" name="email" formControlName="email" class="form-control" aria-describedby="emailHelp">
+      </div>
+    <button type="submit" class="btn btn-primary" (click)="onCreateUser()" *ngIf="IsEdit == false">Add User</button>
+    <ng-container *ngIf="IsEdit">
+        <button type="submit" class="btn btn-primary" (click)="onUpdateUser()">update</button>
+        <button type="submit" class="btn btn-primary mx-2" (click)="onClearForm()">Cancel</button>
+    </ng-container>
+    
+  </form>
+</div>

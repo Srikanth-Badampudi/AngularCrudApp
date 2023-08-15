@@ -1,0 +1,18 @@
+{
+  "contacts": [
+    {
+      "id": 1,
+      "firstname": "john",
+      "lastname": "wick",
+      "Designation": "fighter",
+      "email": "johnwick@gmail.com"
+    },
+    {
+      "id": 2,
+      "firstname": "john",
+      "lastname": "wick",
+      "Designation": "fighter",
+      "email": "johnwick@gmail.com"
+    }
+  ]
+}
