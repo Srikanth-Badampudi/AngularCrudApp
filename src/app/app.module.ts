@@ -1,30 +1,33 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './component/dashboard/dashboard.component';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { CrudService } from './service/crud.service';
-import { UserformComponent } from './component/userform/userform.component';
+
 import { UsertableComponent } from './component/usertable/usertable.component';
-import { UserdetailsComponent } from './component/userdetails/userdetails.component';
+
+const appRoute: Routes = [
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
+  },
+  { path: 'dashboard', component: UsertableComponent },
+];
 @NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-    UserformComponent,
-    UsertableComponent,
-    UserdetailsComponent
-  ],
+  declarations: [AppComponent, UsertableComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forRoot(appRoute),
   ],
   providers: [CrudService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

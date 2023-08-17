@@ -40,3 +40,7 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+src/app/component/userform/userform.component.spec.ts
+src/app/component/userdetails/userdetails.component.css
+src/app/component/userdetails/userdetails.component.css
+src/app/component/userform/userform.component.ts

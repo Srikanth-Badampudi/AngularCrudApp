@@ -1,6 +1,13 @@
-<div>
-    <div class="bg-success text-center"><h4 class="p-2 text-white">User's list</h4></div>
-    <table class="table mb-2">
+<div class="container bg-light p-4 my-4">
+  <div class="my-3">
+    <button class="btn btn-success" (click)="onDisplayModal()">
+      <i class="fa-solid fa-user-plus"></i> Add user
+    </button>
+  </div>
+  <div class="bg-success text-center">
+    <h4 class="p-2 text-white">User's list</h4>
+  </div>
+  <table class="table mb-2">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -13,12 +20,200 @@
     </thead>
     <tbody>
       <tr *ngFor="let Item of contactsData">
-        <th scope="row">{{Item.id}}</th>
-        <td>{{Item.firstname}}</td>
-        <td>{{Item.lastname}}</td>
-        <td>{{Item.Designation}}</td>
-        <td>{{Item.email}}</td>
-        <td><button class="btn btn-warning btn-sm mx-1" (click)="onDisplayUser()">Edit</button> <button class="btn btn-success btn-sm mx-1" (click)="onDeleteUser()">Details</button> <button class="btn btn-danger btn-sm mx-1" (click)="onDeleteUser()">Delete</button></td>
+        <th scope="row">{{ Item.id }}</th>
+        <td>{{ Item.firstname }}</td>
+        <td>{{ Item.lastname }}</td>
+        <td>{{ Item.designation }}</td>
+        <td>{{ Item.email }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm mx-1" (click)="onGetUser(Item)">
+            <i class="fa-solid fa-user-pen"></i>
+            Edit
+          </button>
+          <button
+            class="btn btn-success btn-sm mx-1"
+            (click)="onDisplayUserInfo(Item)"
+          >
+            Details
+          </button>
+          <button
+            class="btn btn-danger btn-sm mx-1"
+            (click)="onDeleteUser(Item.id)"
+          >
+            <i class="fa-solid fa-trash"></i>
+            Delete
+          </button>
+        </td>
       </tr>
     </tbody>
-  </table></div>
+  </table>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal brackground"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+  [ngClass]="IsmodalActive ? 'show' : 'hide'"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="FormData" (ngSubmit)="onSubmit()">
+        <div class="modal-header">
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="onCloseModal()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="col">
+            <div class="bg-success text-center">
+              <h4 class="p-2 text-white">
+                {{ selectedUserId ? "UPDATE USER" : "ADD USER" }}
+              </h4>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label"
+                >*Firstname</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="firstname"
+                formControlName="firstname"
+                aria-describedby="emailHelp"
+              />
+              <span
+                class="text-danger"
+                *ngIf="FormData.controls['firstname'].errors?.['required'] && submitted"
+                >*Firstname required</span
+              >
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label"
+                >*Lastname</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="lastname"
+                formControlName="lastname"
+              />
+              <span
+                class="text-danger"
+                *ngIf="FormData.controls['lastname'].errors?.['required'] && submitted"
+                >*Lastname required</span
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label"
+                >*Designation</label
+              >
+              <select
+                class="form-select"
+                formControlName="designation"
+                aria-label="Default select example"
+              >
+                <ng-container *ngFor="let option of designations">
+                  <option value="{{ option }}">{{ option }}</option>
+                </ng-container>
+              </select>
+              <span
+                class="text-danger"
+                *ngIf="FormData.controls['designation'].errors?.['required'] && submitted"
+                >*Designation required</span
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">*Email</label>
+              <input
+                type="email"
+                name="email"
+                formControlName="email"
+                class="form-control"
+                aria-describedby="emailHelp"
+              />
+              <span
+                class="text-danger"
+                *ngIf="FormData.controls['email'].errors?.['required'] && submitted"
+                >*Email required</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <ng-container *ngIf="selectedUserId">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="onCloseModal()"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary mx-2">Update</button>
+          </ng-container>
+          <ng-container *ngIf="!selectedUserId">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="onCloseModal()"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary mx-2">Add</button>
+          </ng-container>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- User Info Modal  -->
+<div
+  class="modal brackground"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+  [ngClass]="IsinfoModalActive ? 'show' : 'hide'"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          User Information
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="onDisplayModalInfo()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngFor="let user of userInfo">
+          <div class="row Info" *ngIf="user[0] != 'id'">
+            <div class="col">
+              <label class="Info-Label">{{ user[0] }}</label>
+            </div>
+            <div class="col">
+              <span class="Info-Value">{{ user[1] }}</span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

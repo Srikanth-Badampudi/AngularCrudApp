@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.brackground {
+  background-color: rgba(0, 0, 0, 0.251);
+}
+
+.Info{
+    margin:1.1rem 0;
+}
+
+.Info-Label{
+    font-weight: bold;
+}
